@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeletePostRequest;
+use App\Http\Requests\EditPostRequest;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -25,7 +27,7 @@ class UserController extends Controller
         return $post;
     }
 
-    public function editPost(Request $request, $id)
+    public function editPost(EditPostRequest $request, $id)
     {
         $edit = Post::find($id);
         $edit->title = $request->title;
@@ -35,12 +37,10 @@ class UserController extends Controller
         return $edit;
     }
 
-    public function deletePost($id)
+    public function deletePost(DeletePostRequest $request)
     {
-        $delete = Post::find($id);
+        $delete = Post::find($request->id);
         $delete->delete();
-
-        // $delete = DB::table('posts')->where('id', $id)->delete();
 
         return $delete;
     }
